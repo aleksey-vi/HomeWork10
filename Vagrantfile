@@ -40,15 +40,15 @@ box.vm.provision "shell", privileged: false, inline: <<-SHELL
         sudo yum-builddep -y -q nginx > /dev/null 2>&1
         echo -e "\nСкачиваем rpm с исходниками nginx..."
         echo -e "\nДобавим репозиторий nginx..."
-        cat <<'EOF1' | sudo tee /etc/yum.repos.d/nginx.repo
+cat <<'EOF1' | sudo tee /etc/yum.repos.d/nginx.repo
 [nginx]
 name=nginx repo
-baseurl=http://nginx.org/packages/mainline/centos/8/$basearch/
+baseurl=http://nginx.org/packages/mainline/centos/7/$basearch/
 gpgcheck=0
 enabled=1
 [nginx-source]
 name=nginx source repo
-baseurl=http://nginx.org/packages/mainline/centos/8/SRPMS/
+baseurl=http://nginx.org/packages/mainline/centos/7/SRPMS/
 gpgcheck=0
 enabled=1
 EOF1
@@ -75,13 +75,13 @@ EOF1
 	echo -e "\nПерезапустим nginx"
 	sudo nginx -s reload
         echo -e "\nСоздаем файл repo..."
-        sudo cat <<'EOF' | sudo tee /etc/yum.repos.d/otus.repo
+cat <<'EOF' | sudo tee /etc/yum.repos.d/otus.repo
 [otus]
 name=otus-linux
 baseurl=http://localhost/repo
 enabled=1
 gpgcheck=0
-EOF 
+EOF
 	echo "Так как NGINX у нас уже стоит установим репозиторий percona-release:"
         sudo yum install percona-release -y
 
